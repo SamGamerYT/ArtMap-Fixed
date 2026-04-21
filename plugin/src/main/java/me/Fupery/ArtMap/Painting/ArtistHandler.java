@@ -52,7 +52,7 @@ public class ArtistHandler implements IArtistHandler {
 
 			if (type == PacketType.LOOK) {
 				ArtistPacket.PacketLook packetLook = (ArtistPacket.PacketLook) packet;
-				session.updatePosition(packetLook.getYaw(), packetLook.getPitch());
+				session.updatePosition(packetLook.getYaw(), packetLook.getPitch(), sender);
 				return true;
 				// Handle Save brush
 			} else if (type == PacketType.INTERACT && ArtMaterial

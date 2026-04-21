@@ -18,7 +18,7 @@ public class CursorTest {
             System.out.println("Worst case scenario: Cursor moving randomly all over the screen.");
             long currentTime = System.currentTimeMillis();
             for(int i=0; i<pitch.length; i++) {
-                cursor.setPitch(pitch[i]);
+                cursor.setPitch(pitch[i], null);
                 cursor.setYaw(yaw[i]);
             }
             System.out.printf("Current method: %d operations in %d ms%n", pitch.length, System.currentTimeMillis()-currentTime);
@@ -35,7 +35,7 @@ public class CursorTest {
             System.out.println("Best case scenario: Cursor moving slowing while painting.");
             currentTime = System.currentTimeMillis();
             for(int i=0; i<pitch.length; i++) {
-                cursor.setPitch(pitch[i]);
+                cursor.setPitch(pitch[i], null);
                 cursor.setYaw(yaw[i]);
             }
             System.out.printf("Current method: %d operations in %d ms%n", pitch.length, System.currentTimeMillis()-currentTime);

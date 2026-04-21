@@ -159,8 +159,8 @@ public class CanvasRenderer extends MapRenderer implements ICanvasRenderer {
         cursor.setYaw(yaw);
     }
 
-    void setPitch(float pitch) {
-        cursor.setPitch(pitch);
+    void setPitch(float pitch, Player player) {
+        cursor.setPitch(pitch, player);
     }
 
     public int getAxisLength() {

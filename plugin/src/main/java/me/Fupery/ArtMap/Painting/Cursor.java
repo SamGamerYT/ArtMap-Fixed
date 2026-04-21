@@ -1,6 +1,7 @@
 package me.Fupery.ArtMap.Painting;
 
 import me.Fupery.ArtMap.IO.PixelTableManager;
+import org.bukkit.entity.Player;
 
 class Cursor {
 
@@ -14,8 +15,9 @@ class Cursor {
     private boolean yawOffCanvas;
     private boolean pitchOffCanvas;
 
-    Cursor(int yawOffset, PixelTableManager pixelTable) {
+    private static final float BEDROCK_PITCH_CORRECTION = 20.0f;
 
+    Cursor(int yawOffset, PixelTableManager pixelTable) {
         yawTable = pixelTable.getYawBounds();
         pitchTables = pixelTable.getPitchBounds();
         this.yawOffset = yawOffset;
@@ -30,9 +32,15 @@ class Cursor {
         updatePitchBounds();
     }
 
-    void setPitch(float pitch) {
-        if (Math.abs(this.pitch - pitch) > .0001) {
-            this.pitch = pitch;
+    void setPitch(float pitch, Player player) {
+        float finalPitch = pitch;
+
+        if (isBedrockPlayer(player)) {
+            finalPitch += BEDROCK_PITCH_CORRECTION;
+        }
+
+        if (Math.abs(this.pitch - finalPitch) > .0001) {
+            this.pitch = finalPitch;
             updateYPos();
         }
     }
@@ -41,6 +49,18 @@ class Cursor {
         if (Math.abs(this.yaw - yaw) > .0001) {
             this.yaw = yaw;
             updateXPos();
+        }
+    }
+
+    private boolean isBedrockPlayer(Player player) {
+        if (player == null) return false;
+        try {
+            Class<?> floodgateApi = Class.forName("org.geysermc.floodgate.api.FloodgateApi");
+            Object api = floodgateApi.getMethod("getInstance").invoke(null);
+            return (boolean) floodgateApi.getMethod("isFloodgatePlayer", java.util.UUID.class)
+                    .invoke(api, player.getUniqueId());
+        } catch (Exception e) {
+            return false;
         }
     }
 
@@ -91,13 +111,8 @@ class Cursor {
     }
 
     private float checkBounds(float value) {
-
-        if (value > 40) {
-            return 40;
-
-        } else if (value < -40) {
-            return -40;
-        }
+        if (value > 40) return 40;
+        if (value < -40) return -40;
         return value;
     }
 
@@ -112,13 +127,8 @@ class Cursor {
         downBound = ((float[]) pitchTables[x])[y + 1];
     }
 
-    int getX() {
-        return x;
-    }
-
-    int getY() {
-        return y;
-    }
+    int getX() { return x; }
+    int getY() { return y; }
 
     boolean isOffCanvas() {
         return yawOffCanvas || pitchOffCanvas;
