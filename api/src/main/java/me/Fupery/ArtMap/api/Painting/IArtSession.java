@@ -8,7 +8,7 @@ import org.bukkit.entity.Player;
 public interface IArtSession {
 
     boolean start(Player player) throws SQLException, IOException;
-    void updatePosition(float yaw, float pitch, Player player);
+    void updatePosition(float yaw, float pitch);
     /**
      * @return True if the artsession has the artkit in use.
      */

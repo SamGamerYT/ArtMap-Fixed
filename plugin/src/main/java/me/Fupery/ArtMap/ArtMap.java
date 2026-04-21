@@ -189,9 +189,7 @@ public class ArtMap extends JavaPlugin implements IArtMap {
 			menuHandler = new MenuHandler(this);
 			PluginCommand artCommand = getCommand("art");
 			if(artCommand!=null) {
-				CommandHandler commandHandler = new CommandHandler();
-				artCommand.setExecutor(commandHandler);
-				artCommand.setTabCompleter(commandHandler);
+				artCommand.setExecutor(new CommandHandler());
 			} else {
 				getLogger().severe("Failed to bind /art or /artmap! Disabling...");
 				getPluginLoader().disablePlugin(this);

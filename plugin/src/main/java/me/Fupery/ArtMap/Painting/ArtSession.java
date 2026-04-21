@@ -124,9 +124,9 @@ public class ArtSession implements IArtSession {
         return null;
     }
 
-    public void updatePosition(float yaw, float pitch, Player player) {
+    public void updatePosition(float yaw, float pitch) {
         canvas.setYaw(yaw);
-        canvas.setPitch(pitch, player);
+        canvas.setPitch(pitch);
     }
 
     private void addKit(Player player) {

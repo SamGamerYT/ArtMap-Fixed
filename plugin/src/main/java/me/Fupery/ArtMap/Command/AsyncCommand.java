@@ -1,8 +1,5 @@
 package me.Fupery.ArtMap.Command;
 
-import java.util.ArrayList;
-import java.util.List;
-
 import org.bukkit.command.CommandSender;
 import org.bukkit.entity.Player;
 
@@ -47,9 +44,5 @@ abstract class AsyncCommand {
     }
 
     public abstract void runCommand(CommandSender sender, String[] args, ReturnMessage msg);
-
-    public List<String> tabComplete(CommandSender sender, String[] args) {
-        return new ArrayList<>();
-    }
 }
 
